@@ -1,26 +1,25 @@
-var setupStatus = function () {
-  var span = document.getElementById('poll_status');
+var DEFAULT_SKIP_KEYWORDS = 'LGTM\nReactions should always'
 
-  while (span.firstChild) {
-    span.removeChild(span.firstChild);
-  }
-
-  var enabled = chrome.storage.sync.get({
-    polling: true,
-  }, function (item) {
-    pollingStatus = item.polling;
-    span.appendChild(document.createTextNode(item.polling ? "Enabled" : "Disabled"));
-  });
-};
-
-var pollingStatus;
-
-setupStatus();
-
-document.getElementById('toggle_poll').addEventListener('click', function () {
+// Saves options to chrome.storage.sync.
+function save_options() {
+  var skipKeywords = document.getElementById('skipKeywords').value;
   chrome.storage.sync.set({
-    polling: !pollingStatus
-  }, function (items) {
-    setupStatus();
+    skipKeywords: skipKeywords
+  }, function () {
+    window.close();
   });
-}, false)
+}
+
+// Restores select box and checkbox state using the preferences
+// stored in chrome.storage.
+function restore_options() {
+  // Use default value color = 'red' and likesColor = true.
+  chrome.storage.sync.get({
+    skipKeywords: DEFAULT_SKIP_KEYWORDS
+  }, function (items) {
+    document.getElementById('skipKeywords').value = items.skipKeywords;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', restore_options);
+document.getElementById('save').addEventListener('click', save_options);

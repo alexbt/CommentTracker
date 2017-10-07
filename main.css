@@ -1,5 +1,4 @@
-.comment-track-action {
-  cursor: pointer;
+.comment-track-style {
   position: relative;
   top: 6px;
   padding: 3px;
@@ -10,40 +9,20 @@
   text-align: center;
 }
 
-.comment-track-unresolve {
+.comment-track-resolved {
   background-color: hsla(120, 63%, 74%, 1);
   border-color: hsla(120, 63%, 56%, 1);
 }
 
-.comment-track-unresolve:after {
+.comment-track-resolved:after {
   content: '\02713\00a0Resolved'; /* These \f characters are from octicon */
 }
 
-.comment-track-unresolve:hover {
+.comment-track-unresolved {
   background-color: hsla(360, 63%, 74%, 1);
   border-color: hsla(360, 63%, 56%, 1);
 }
 
-.comment-track-unresolve:hover::after {
-  content: '\2715\00a0Unresolve';
-  background-color: hsla(360, 63%, 74%, 1);
-  border-color: hsla(360, 63%, 56%, 1);
-}
-
-.comment-track-resolve {
-  background-color: hsla(360, 63%, 74%, 1);
-  border-color: hsla(360, 63%, 56%, 1);
-}
-
-.comment-track-resolve:after {
+.comment-track-unresolved:after {
   content: '\2715\00a0Unresolved';
-}
-
-.comment-track-resolve:hover {
-  background-color: hsla(120, 63%, 74%, 1);
-  border-color: hsla(120, 63%, 56%, 1);
-}
-
-.comment-track-resolve:hover::after {
-  content: '\02713\00a0Resolve';
 }

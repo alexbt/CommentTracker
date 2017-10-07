@@ -1,12 +1,17 @@
-<head>
-  <Title>Github Comment Tracker Options</title>
-</head>
-<body>
-<div>This is the settings page for the Github Comment Tracker extension.</div>
-<br><br>
+<html>
+  <head>
+    <Title>Github PR Comment Tracker Options</title>
+  </head>
+  <body min-height="200px">
+    <label>Skip comments with following keywords (one by line):</label>
+    <br/><br/>
 
-Query for new data every few seconds: <span id="poll_status"></span> <a href='#' id="toggle_poll">(Toggle)</a>
+    <textarea id="skipKeywords" style="width:100%;" rows="5"></textarea>
+    <br/><br/>
 
-<script type="text/javascript" src="options.js">
-</script>
-</body>
+    <button id="save">Save</button>
+    <div align="right">Version: 1.0.10</div>
+
+    <script type="text/javascript" src="options.js"></script>
+  </body>
+</html>
