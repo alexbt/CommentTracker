@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "GitHub PR Comment Tracker",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Tracks resolved/unresolved comments on GitHub PR using the Thumbs Up (+1): https://github.com/alexbt/github-pr-comment-tracker",
   "short_name": "GitHub PR Comment Tracker",
   "icons": {
