@@ -18,15 +18,15 @@ var main = function () {
   username = document.getElementsByClassName('pull-header-username')[0].innerText;
 
   chrome.storage.sync.get({
-    isReviewer: false,
+    mode: 'modeAuthor',
     skipKeywords: DEFAULT_SKIP_KEYWORDS
   }, function (items) {
     skipKeywords = items.skipKeywords.trim().replace("\n", "|");
 
-    if(items.isReviewer){
+    if(items.mode == 'modeReviewer'){
         username = document.getElementsByTagName('meta')['user-login'].content;
     }
-    document.addEventListener('DOMNodeInserted', function () {
+    document.addEventListener('DOMSubtreeModified', function () {
       if (!pageHasChanged) {
         pageHasChanged = true;
         setTimeout(function () {
