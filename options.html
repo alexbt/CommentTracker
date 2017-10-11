@@ -2,15 +2,18 @@
   <head>
     <Title>Github PR Comment Tracker Options</title>
   </head>
-  <body min-height="200px">
+  <body>
     <label>Skip comments with following keywords (one by line):</label>
     <br/><br/>
-
     <textarea id="skipKeywords" style="width:100%;" rows="5"></textarea>
     <br/><br/>
 
+    <label>Enable "Reviewer" mode: </label>
+    <input id="isReviewer" type="checkbox" value='No'>
+    <br/><br/>
+
     <button id="save">Save</button>
-    <div align="right">Version: 1.0.10</div>
+    <div align="right">Version: 1.0.13</div>
 
     <script type="text/javascript" src="options.js"></script>
   </body>

@@ -9,19 +9,23 @@ var isDiscussion = false
 var skipKeywords;
 var DEFAULT_SKIP_KEYWORDS = 'LGTM\nReactions should always'
 var pageHasChanged = false;
-var canBeMerged = false;
 
 
 /**
  * Main
  */
 var main = function () {
+  username = document.getElementsByClassName('pull-header-username')[0].innerText;
+
   chrome.storage.sync.get({
-    polling: true,
+    isReviewer: false,
     skipKeywords: DEFAULT_SKIP_KEYWORDS
   }, function (items) {
-    username = document.getElementsByClassName('pull-header-username')[0].innerText
     skipKeywords = items.skipKeywords.trim().replace("\n", "|");
+
+    if(items.isReviewer){
+        username = document.getElementsByTagName('meta')['user-login'].content;
+    }
     document.addEventListener('DOMNodeInserted', function () {
       if (!pageHasChanged) {
         pageHasChanged = true;
@@ -150,40 +154,14 @@ var expandUnresolvedComments = function (allComments) {
  * Displays the message at the top and bottom
  */
 var updateTopBottom = function () {
-  if (!canBeMerged) {
-    canBeMerged = $('.js-merge-branch-action').hasClass('btn-primary');
-  }
   $('.comment-track-status').remove();
 
-  if (canBeMerged) {
-    if (unresolvedComments.size = 0) {
-      // Make button green
-      $('.js-merge-branch-action').addClass('btn-primary');
-      $('.branch-action').addClass('branch-action-state-clean').removeClass('branch-action-state-dirty');
-      $('.status-heading').text('This pull request can be automatically merged.');
-      $('.status-meta').text('Merging can be performed automatically.');
-      $('.branch-action-item-icon').removeClass('completeness-indicator-problem')
-        .addClass('completeness-indicator-success')
-        .html('<svg aria-hidden="true" class="octicon octicon-alert" height="16" role="img" version="1.1" viewBox="0 0 12 16" width="12">' +
-          '<path d="M12 5L4 13 0 9l1.5-1.5 2.5 2.5 6.5-6.5 1.5 1.5z"></path></svg>');
-    } else {
-      // Make button grey
-      $('.js-merge-branch-action').removeClass('btn-primary');
-      $('.branch-action').removeClass('branch-action-state-clean').addClass('branch-action-state-dirty');
-      $('.status-heading').text('Merge with caution!');
-      $('.status-meta').text('You have unresolved comments!');
-      $('.branch-action-item-icon').removeClass('completeness-indicator-success')
-        .addClass('completeness-indicator-problem')
-        .html('<svg aria-hidden="true" class="octicon octicon-alert" height="16" role="img" version="1.1" viewBox="0 0 16 16" width="16">' +
-          '<path d="M15.72 12.5l-6.85-11.98C8.69 0.21 8.36 0.02 8 0.02s-0.69 0.19-0.87 0.5l-6.85 11.98c-0.18 0.31-0.18 0.69 0 1C0.47 13.81 ' +
-          '0.8 14 1.15 14h13.7c0.36 0 0.69-0.19 0.86-0.5S15.89 12.81 15.72 12.5zM9 12H7V10h2V12zM9 9H7V5h2V9z"></path></svg>');
-    }
-  } else if (unresolvedComments.size != 0) {
-    displayWarnings()
-  } else {
+  if (unresolvedComments.size == 0) {
     displaySuccess();
+  } else {
+    displayWarnings()
+    unresolvedComments.clear();
   }
-  unresolvedComments.clear();
 };
 
 
@@ -213,8 +191,8 @@ var appendLabelStyle = function (elem) {
     $elem.find(actionSelector)[0].innerHTML = $elem.find(actionSelector)[0].innerHTML.replace('<span class="octicon comment-track-style comment-track-unresolved"></span>', '');
     $elem.find(actionSelector).prepend('<span class="octicon comment-track-style comment-track-unresolved"></span>');
 
-    var content = $elem.find(actionSelector)[0].innerText.trim()
-    if (content != "") {
+    var content = $elem.find(actionSelector)[0].innerHTML.trim()
+    if ($elem.find(actionSelector)[0].innerText.trim() != "") {
       unresolvedComments.add(content);
     }
   }
