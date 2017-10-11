@@ -26,7 +26,7 @@ var main = function () {
     if(items.mode == 'modeReviewer'){
         username = document.getElementsByTagName('meta')['user-login'].content;
     }
-    document.addEventListener('DOMNodeInserted', function () {
+    document.addEventListener('DOMSubtreeModified', function () {
       if (!pageHasChanged) {
         pageHasChanged = true;
         setTimeout(function () {
