@@ -3,17 +3,29 @@
     <Title>Github PR Comment Tracker Options</title>
   </head>
   <body>
-    <label>Skip comments with following keywords (one by line):</label>
+    <div>
+      <i>Comments will be marked as Resolved/Unresolved based on ThumbsUps (+1s) from the <b>author</b> or <b>reviewer</b> (see option below).</i><br/><br/>
+    </div>
+
+    <hr/>
+
+    <br/><br/>
+    <label><b>1. Skip comments with following keywords (one by line):</b></label>
     <br/><br/>
     <textarea id="skipKeywords" style="width:100%;" rows="5"></textarea>
     <br/><br/>
 
-    <label>Enable "Reviewer" mode: </label>
-    <input id="isReviewer" type="checkbox" value='No'>
+    <label><b>2. Select tracking mode: </b></label>
+    <br/><br/>
+    <form action="">
+      <input type="radio" name="mode" id="modeAuthor" value="author"> <b>Author</b>: track ThumbsUp/+1 from the PR Author<br/><br/>
+      <input type="radio" name="mode" id="modeReview" value="review"> <b>Review</b>: track ThumbsUp/+1 from the current user (you)<br/>
+    </form>
+
     <br/><br/>
 
     <button id="save">Save</button>
-    <div align="right">Version: 1.0.13</div>
+    <div align="right">Version: 1.0.14</div>
 
     <script type="text/javascript" src="options.js"></script>
   </body>
